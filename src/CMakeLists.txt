@@ -1,5 +1,5 @@
 set(SRC_FILES
-    hello.cpp
+    bank_crud.cpp
 )
 
 add_library(tutorial_lib ${SRC_FILES})
