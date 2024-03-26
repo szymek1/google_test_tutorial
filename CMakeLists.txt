@@ -4,6 +4,7 @@ project(googletest_lessons
 
         set(CMAKE_CXX_STANDARD 17)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+        set(CMAKE_BUILD_TYPE Debug)
 
 
 include(cmake/UpdateSubmodules.cmake)

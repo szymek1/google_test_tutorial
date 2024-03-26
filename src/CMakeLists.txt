@@ -1,5 +1,7 @@
 set(SRC_FILES
-    hello.cpp
+    node_impl.cpp
+    stack_impl.cpp
+    stack_utils.cpp
 )
 
 add_library(tutorial_lib ${SRC_FILES})
