@@ -11,6 +11,7 @@ public:
     ~StackUtils() = default;
 
     static std::string getReversed(StackImpl& stack, const char* word, int size);
+    static std::string getReversed2(StackImpl& stack, const char* word, int size);
     static bool checkParentheses(StackImpl& stack, char (&sentence)[], int size);
 };
 

@@ -34,6 +34,14 @@ std::string StackUtils::getReversed(StackImpl& stack, const char* word, int size
   return reversed;
 }
 
+std::string StackUtils::getReversed2(StackImpl& stack, const char* word, int size) {
+    std::string reversed;
+
+    for (int i = size - 1; i >= 0; i--) {
+        reversed += word[i];
+    }
+    return reversed;
+}
 
 bool StackUtils::checkParentheses(StackImpl& stack, char (&sentence)[], int size) {
     char open_bracket_01 = '(';

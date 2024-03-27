@@ -29,6 +29,10 @@ INSTANTIATE_TEST_SUITE_P(
     testing::Values(
     std::vector<std::string>{"hello", "olleh"},
     std::vector<std::string>{"world", "dlrow"},
-    std::vector<std::string>{ "", ""}
-  )
+    std::vector<std::string>{ "a", "a"}
+  ),
+    [](const testing::TestParamInfo<StackUtilsTest::ParamType>& info) {
+        const std::string& first_string = info.param[0];
+        return first_string;
+    }
 );
