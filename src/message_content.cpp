@@ -7,7 +7,7 @@ Message::Message(const std::string& message_content) :
 std::string Message::getMessage() const { return _message_content; }
 
 bool Message::isMessageHTML() const {
-    static const std::regex https_link_regex(R"(href="https://[^"]+")", std::regex::icase);
-
-    return std::regex_search(_message_content, https_link_regex);
+  static const std::regex https_prefix_regex(R"(^https://)", std::regex::icase);
+  
+  return std::regex_search(_message_content, https_prefix_regex);
 }
