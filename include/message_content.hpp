@@ -12,7 +12,7 @@ public:
 
     std::string getMessage() const;
     bool isMessageHTML() const;
-
+    
 private:
     std::string _message_content;
 };
