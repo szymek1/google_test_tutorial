@@ -11,7 +11,9 @@
 std::vector<std::tuple<std::string, std::pair<std::string, bool>>> test_data = {
   {"Correct", {"https://www.example.com", true}},
   {"Plain", {"Plain text", false}},
-  {"Incorrect", {"http example", false}}
+  {"Incorrect", {"http example", false}},
+  {"Character_cnt_10", {"AlaMaKotka", true}},
+  {"Character_cnt_not_10", {"AlaMaKotk", false}}
 };
 
 std::map<std::string, std::pair<std::string, bool>> input_data = {
@@ -29,6 +31,10 @@ class MessageTest : public testing::TestWithParam<
 class MessageTest : public testing::TestWithParam<
   std::pair<std::string, std::pair<std::string, bool>>> {};
 */
+
+MATCHER(Is10charsLong, "String is longer than 10 character") {
+  return arg.size() == 10;
+}
 
 INSTANTIATE_TEST_SUITE_P(
     isHTML,
@@ -85,10 +91,20 @@ TEST_P(MessageTest, get_message_test) {
 
   /*
   Allows to check what lays inside a property that is a particular method
+  The method must take no parameters and be declared as const
   */
   EXPECT_THAT(mess_vec, testing::UnorderedElementsAre(
     testing::Property(&Message::getMessage, mess_cnt),
     testing::Property(&Message::getMessage, mess_cnt),
     testing::Property(&Message::getMessage, mess_cnt)
   ));
+}
+
+TEST_P(MessageTest, check_char_count) {
+  auto p = GetParam();
+  Message mess = Message(std::get<1>(p).first);
+
+  std::string message_content = mess.getMessage();
+
+  EXPECT_THAT(message_content, Is10charsLong());
 }
