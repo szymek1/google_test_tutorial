@@ -18,3 +18,8 @@ if(BUILD_TESTING)
         add_subdirectory(tests)
 endif()
 
+if(PRODUCTION)
+        add_executable(production_app main.cpp)
+        target_link_libraries(production_app tutorial_lib)
+endif()
+
