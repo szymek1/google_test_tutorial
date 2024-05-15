@@ -14,6 +14,7 @@ public:
     bool withdrewMoney(int account_number, int value);
     bool addMoney(int account_number, int value);
     void displayBalance(int account_number) const;
+    bool doubleTransaction(int account_number, int value_1, int value_2);
 
 private:
     std::shared_ptr<BankServer> _pBankServer;

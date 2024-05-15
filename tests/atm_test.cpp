@@ -43,13 +43,57 @@ TEST_P(ATMTest, getBalanaceTest) {
     int account_number = std::get<0>(p);
     int balance = std::get<1>(p);  
 
-    // std::shared_ptr<MockBankServer> pMockBankServer = std::make_shared<MockBankServer>();
-    // ATM atm = ATM(pMockBankServer);
-
     EXPECT_CALL(*pMockBankServer, connect());
     EXPECT_CALL(*pMockBankServer, getBalance(account_number))
         .WillOnce(testing::Return(balance));
     EXPECT_CALL(*pMockBankServer, disconnect());
 
     atm.displayBalance(account_number);
+}
+
+TEST_P(ATMTest, addMoneyTest) {
+    auto p = GetParam();
+    int account_number = std::get<0>(p);
+    int money2add = std::get<1>(p);
+
+    EXPECT_CALL(*pMockBankServer, connect());
+    EXPECT_CALL(*pMockBankServer, credit(account_number, money2add))
+      .WillOnce(testing::Return());
+    EXPECT_CALL(*pMockBankServer, disconnect());
+
+    ASSERT_EQ(atm.addMoney(account_number, money2add), true);
+}
+
+TEST_P(ATMTest, doubel_transaction_3_times_fail_test) {
+    auto p = GetParam();
+    int account_number = std::get<0>(p);
+    int val_1 = std::get<1>(p);
+    int val_2 = std::get<1>(p) + 1;
+
+    EXPECT_CALL(*pMockBankServer, connect());
+    ON_CALL(*pMockBankServer, 
+      doubleTransaction(account_number, val_1, val_2))
+        .WillByDefault(testing::Return(false));
+    EXPECT_CALL(*pMockBankServer, doubleTransaction(account_number, val_1, val_2))
+        .Times(3);
+    EXPECT_CALL(*pMockBankServer, disconnect());
+
+    ASSERT_FALSE(atm.doubleTransaction(account_number, val_1, val_2));
+}
+
+TEST_P(ATMTest, doubel_transaction_2_times_fail_then_pass_test) {
+    auto p = GetParam();
+    int account_number = std::get<0>(p);
+    int val_1 = std::get<1>(p);
+    int val_2 = std::get<1>(p) + 1;
+
+    EXPECT_CALL(*pMockBankServer, connect());
+    EXPECT_CALL(*pMockBankServer, 
+      doubleTransaction(account_number, val_1, val_2))
+        .WillOnce(testing::Return(false))
+        .WillOnce(testing::Return(false))
+        .WillOnce(testing::Return(true));
+    EXPECT_CALL(*pMockBankServer, disconnect());
+
+    ASSERT_TRUE(atm.doubleTransaction(account_number, val_1, val_2));
 }

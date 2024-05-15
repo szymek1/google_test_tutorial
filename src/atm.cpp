@@ -36,3 +36,21 @@ void ATM::displayBalance(int account_number) const {
     std::cout << _pBankServer->getBalance(account_number) << std::endl;
     _pBankServer->disconnect();
 }
+
+bool ATM::doubleTransaction(int account_number, int value_1, int value_2) {
+    int patienceThreshold = 0;
+    bool isDoubleTransaction = false;
+
+    _pBankServer->connect();
+    
+    do {
+        isDoubleTransaction = _pBankServer->doubleTransaction(account_number, value_1, value_2);
+        if (isDoubleTransaction == true) {  break; }
+        patienceThreshold++;
+    } while (patienceThreshold < 3);
+
+
+    _pBankServer->disconnect();
+
+    return isDoubleTransaction;
+}

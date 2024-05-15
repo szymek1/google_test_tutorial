@@ -21,6 +21,8 @@ bool MyBankServer::doubleTransaction(int account_number, int value_1, int value_
     bool isTransaction = false;
     std::cout << "Transaction details:\nNumber: " << account_number 
     << "\nValue 1: " << value_1 << "\nValue 2: " << value_2 << std::endl;
+    isTransaction = true;
+    return isTransaction;
 }
 
 int MyBankServer::getBalance(int account_number) const {
